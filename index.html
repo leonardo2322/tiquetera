@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Tiquetera</title>
+</head>
+<body>
+    <div>
+        <div class="contain-inp"><button class="decrement" id="decrement" onclick="stepper(this)"> - </button></div>
+        <div>
+            <h1>
+                Tiquet Delicias de Ama
+            </h1>
+                <img src="./img/imgimg_restaurante.png" alt="">
+                <input type="text" class="NameCustomer" placeholder="Ingrese el Nombre Del Cliente">
+                <h1>Nº</h1>
+                <input  type="number" name="cant" class="cant" id="quantityA" min="0" max="10" value="1" step="1" readonly>
+
+        </div>
+        <button class="increment" id="increment" onclick="stepper(this)"> + </button>
+
+        <button class="create" onclick="evento(this)" id="create">Crear Tiquetera</button>
+    </div>
+
+    <div>
+        <input type="text" id="searchCustomer" placeholder="ingrese el Cliente que desea buscar">
+        <button class="search" id="search"><i class="fas fa-search"></i></button>
+        <div class="customerFound">
+            <!-- cliente encontrado informacion -->
+        </div>
+
+        <div class="contain-inp"><button class="decrement" id="decrement" onclick="stepper1(this)"> - </button><input  type="number" name="cant" id="quantityb" min="0" max="10" value="1" step="1" readonly><button class="increment" id="increment" onclick="stepper1(this)"> + </button></div>
+
+        <button class="saveChanges" id="saveChanges">Guardar cambios</button>
+    </div>
+
+    <script src="/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+*{
+    margin: 0 0;
+    padding: 0 0;
+    font-family: 'Roboto', sans-serif;
+    margin:0; padding:0;
+    box-sizing: border-box;
+    text-decoration: none;
+    outline: none; border:none;
+    text-transform: capitalize;
+    transition:all .2s linear;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+.customerFound{
+    width: 100%;
+    height: 10vh;
+}
+
+button{
+    border-radius: 7%;
+    color: bisque;
+    background-color: rgb(24, 62, 189);
+    padding: 10px 10px;
+    margin: 10px;
+}
+button:hover{
+    background-color: rgba(24, 62, 189,0.8);
+}
+input{
+    border: none;
+    border-bottom: 2px solid rgb(24, 62, 189);
+    margin: 10px;
+    padding: 10px;
+    width: 20%;
+    
+}
+input[type="number"]{
+    -moz-appearance: textfield;
+    text-align: center;
+    width: 3rem;
+    text-size-adjust: 10px;
+}
+input:focus{
+    background-color: rgba(143, 143, 145, 0.8);
+}
