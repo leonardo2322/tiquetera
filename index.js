@@ -45,27 +45,82 @@ const NameCustomer = document.querySelector(".NameCustomer")
 // contenedor
 const contcustomerFound = document.querySelector(".customerFound")
 let date = new Date
-let url="http://127.0.0.1:5500/index.html"
+let url="https://leonardo2322.github.io/contenedor.html/"
 
+let  listaDeUsuario = {}
+let contador = 0
 
-function evento(e) {
-    let customerUrl = Customer(url,NameCustomer.value)
-    console.log(customerUrl)
-    let customerCreated;
+ function evento(e) {
+    // let customerUrl = Customer(url,NameCustomer.value)
+    console.log(url)
     if (NameCustomer.value === "") {
         alert("por favor ingrese nombre del cliente")
     }else{
+
         let customerID = {
             "ID":NameCustomer.value,
-            "customerUrl" : customerUrl,
+            "customerUrl" : url,
             "customerCantidad":inCantCreating.value,
             "fecha":date.toLocaleDateString()
         }
         let objeto =JSON.stringify(customerID)
 
         localStorage.setItem(customerID.ID,objeto)
+        
+        
+        if (!listaDeUsuario.hasOwnProperty(customerID.ID)) {
+          listaDeUsuario[customerID.ID] = customerID
+        }
 
-        console.log(JSON.parse(localStorage.getItem(customerID.ID)))
+        contador+=1
     }
-}
+    
 
+    
+    
+}
+document.addEventListener('DOMContentLoaded',function () {
+  localCarga()
+})
+function localCarga() {
+  let almacen = []
+if (localStorage.length >0){
+  // let parseo = JSON.parse(localStorage.getItem(localStorage.key(0)))
+  let htmlEnlace = document.createElement('div')
+  contcustomerFound.appendChild(htmlEnlace)
+  let arr = []
+  for(var i = 0; i < localStorage.length; i++) {              
+    let clave = localStorage.key(i);
+    let cliente = [JSON.parse(localStorage.getItem(clave))];
+    for (const iterator of cliente) {
+      let contendedorCards = document.createElement('section')
+
+      let div = `
+      <div class="cont">
+        <h1 class="identi">${iterator.ID}</h1>
+        <h2 class="cantidad">Cantidad de tiqutes: ${iterator.customerCantidad}</h2>
+        <a href="" class="direccion">${iterator.customerUrl}</a>
+        <h4 class="fecha">${iterator.fecha}</h4>
+      </div>`
+      contendedorCards.innerHTML = div
+      contcustomerFound.append(contendedorCards)
+    }
+    // for(const i in cliente){
+      
+    //   arr.push(cliente[i])
+
+    // }
+    // almacen.push(arr)
+    // htmlEnlace.innerHTML = `<h1>${clienteID}</h1>
+    // <p>${fechaDeElaboracion}, direccion: ${clientUrl}</p>
+    // <p>${cant}</p>
+    // ` 
+
+    
+}
+}}
+
+
+
+let data = localStorage.getItem(inSearchCustomer.value)
+console.log(data)

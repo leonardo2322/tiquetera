@@ -14,7 +14,11 @@
 
 .customerFound{
     width: 100%;
-    height: 10vh;
+    height: auto;
+    overflow-y: scroll;
+    border: 2 px dashed #000;
+    margin-bottom: 5rem;
+    margin-top: 3rem;
 }
 
 button{
@@ -43,4 +47,40 @@ input[type="number"]{
 }
 input:focus{
     background-color: rgba(143, 143, 145, 0.8);
+}
+
+.tiket-cont{
+    display: flex;
+}
+.increment{
+    align-self: flex-end;
+    height: 10%;
+}
+.decrement{
+    align-self: flex-end;
+}
+.contain-inp{
+    display: flex;
+
+}
+.create{
+    align-self: flex-end;
+    height: 20%;
+}
+
+.NameCustomer {
+    width: 15rem;
+}
+.father{
+    display: flex;
+    flex-direction: column;
+}
+.refresh{
+    width: 5rem;
+    height: 2rem;
+    padding: 5px 3px;
+    border-radius: 10%;
+    background-color: blue;
+    color: #fff;
+    align-self: flex-end;
 }
