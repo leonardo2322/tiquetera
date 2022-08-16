@@ -45,7 +45,7 @@ const NameCustomer = document.querySelector(".NameCustomer")
 // contenedor
 const contcustomerFound = document.querySelector(".customerFound")
 let date = new Date
-let url="https://leonardo2322.github.io/contenedor.html/"
+let url=" https://leonardo2322.github.io/tiquetera/contenedor.html"
 
 let  listaDeUsuario = {}
 let contador = 0
