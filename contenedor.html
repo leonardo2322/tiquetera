@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="./index.css">
     <title>tarjeta digital clientes</title>
 </head>
 <body>
-    <section class="Cont-P">
-
+    <section class="Cont-P" id="Cont-P">
+        <div class="tiket">
+            <h1>
+                Tiquet Delicias de Ama
+            </h1>
+                <img src="./img/imgimg_restaurante.png" alt="">
+                <input type="text" id="inp" >
+                <h1>Nº</h1>
+                <input  type="number" name="cant" class="cant" id="quantityA" min="0" max="60" value="1" step="1" readonly>
+        </div>
     </section>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./code.js"></script>
 </body>
 </html>

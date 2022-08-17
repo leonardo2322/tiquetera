@@ -35,7 +35,7 @@ function Customer(url,enlace) {
 const btnSaveChanges = document.querySelector("#saveChanges")
 const btnSearch = document.querySelector("#search")
 const btnCreate = document.querySelector("#create")
-
+// const tiquet = new Escuchando
 // inputs
 
 const inCantCreating = document.querySelector(".cant")
@@ -45,14 +45,13 @@ const NameCustomer = document.querySelector(".NameCustomer")
 // contenedor
 const contcustomerFound = document.querySelector(".customerFound")
 let date = new Date
-let url=" https://leonardo2322.github.io/tiquetera/contenedor.html"
+let url="./contenedor.html"
 
 let  listaDeUsuario = {}
 let contador = 0
 
  function evento(e) {
     // let customerUrl = Customer(url,NameCustomer.value)
-    console.log(url)
     if (NameCustomer.value === "") {
         alert("por favor ingrese nombre del cliente")
     }else{
@@ -74,7 +73,6 @@ let contador = 0
 
         contador+=1
     }
-    
 
     
     
@@ -97,14 +95,39 @@ if (localStorage.length >0){
 
       let div = `
       <div class="cont">
-        <h1 class="identi">${iterator.ID}</h1>
+        <h1 class="identi" id="tomar">${iterator.ID}</h1>
         <h2 class="cantidad">Cantidad de tiqutes: ${iterator.customerCantidad}</h2>
-        <a href="" class="direccion">${iterator.customerUrl}</a>
+        <button id="PR">click</button>
+        <a href="${iterator.customerUrl}" id="">hola</a>
         <h4 class="fecha">${iterator.fecha}</h4>
       </div>`
       contendedorCards.innerHTML = div
       contcustomerFound.append(contendedorCards)
+
+      $("#PR").click(function (e) {
+        let elemento = e.target.parentElement.children
+        for (const iterator of elemento) {
+            
+            
+            
+        }
+      })
+      
     }
+
+   
+
+
+}
+}}
+
+
+
+let data = localStorage.getItem(inSearchCustomer.value)
+console.log(data)
+
+
+      // $(contcustomerFound).html( `<div class='cont'<h1 class='identi' id='tomar'>${iterator.ID}</h1><h2 class='cantida'>Cantidad de tiqutes: ${iterator.customerCantidad}</h2><button id='PR'>click</button><h4 class='fecha'>${iterator.fecha}</h4></div>`)
     // for(const i in cliente){
       
     //   arr.push(cliente[i])
@@ -117,10 +140,3 @@ if (localStorage.length >0){
     // ` 
 
     
-}
-}}
-
-
-
-let data = localStorage.getItem(inSearchCustomer.value)
-console.log(data)
