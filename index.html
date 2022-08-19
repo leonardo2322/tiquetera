@@ -20,19 +20,22 @@
                     <input type="text" class="NameCustomer" placeholder="Ingrese el Nombre Del Cliente">
                     <h1>Nº</h1>
                     <input  type="number" name="cant" class="cant" id="quantityA" min="0" max="60" value="1" step="1" readonly>
-    
             </div>
             
-            <div class="contain-inp"><button class="decrement" id="decrement" onclick="stepper(this)"> - </button></div>
-            <button class="increment" id="increment" onclick="stepper(this)"> + </button>
+           
+        </div>
+        <div class="buttonsC">
+            <div class="contain-inp"><button class="decrement" id="decrement" onclick="stepper(this)"> - </button><button class="increment" id="increment" onclick="stepper(this)"> + </button></div>
+            
     
             <button class="create" onclick="evento(this)" id="create">Crear Tiquetera</button>
             <a href="" class="refresh">Refrescar data</a>
+            
         </div>
-    
         <div>
-            <input type="text" id="searchCustomer" placeholder="ingrese el Cliente que desea buscar">
-            <button class="search" id="search"><i class="fas fa-search"></i></button>
+            <input type="text" id="searchCustomer" placeholder="ingrese el Cliente">
+            <input type="text" placeholder="Introduzca la cantidad" id="cantR">
+            <button class="search" id="search"><i class="fas fa-pen"></i></button>
             <div class="customerFound">
                 <!-- cliente encontrado informacion -->
             </div>

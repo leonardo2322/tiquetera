@@ -54,13 +54,14 @@ input:focus{
 }
 .increment{
     align-self: flex-end;
-    height: 10%;
+    height: 2.2rem;
 }
 .decrement{
     align-self: flex-end;
 }
 .contain-inp{
     display: flex;
+    flex-direction: row;
 
 }
 .create{
@@ -83,4 +84,18 @@ input:focus{
     background-color: blue;
     color: #fff;
     align-self: flex-end;
+}
+.cont{
+    border-bottom: 2px solid #000;
+}
+
+.buttonsC{
+    margin-bottom: 2rem;
+    height: 10rem;
+}
+#cantR{
+    width: 10rem;
+}
+#searchCustomer{
+    width: 8rem;
 }

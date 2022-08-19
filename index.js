@@ -1,4 +1,27 @@
 const myInput = document.querySelector('#quantityA')
+
+const btnSaveChanges = document.querySelector("#saveChanges")
+const btnSearch = document.querySelector("#search")
+const btnCreate = document.querySelector("#create")
+// const tiquet = new Escuchando
+// inputs
+
+const inCantCreating = document.querySelector(".cant")
+const inSearchCustomer = document.querySelector("#searchCustomer")
+const NameCustomer = document.querySelector(".NameCustomer")
+const cantr = document.getElementById("cantR").value
+
+// contenedor
+const contcustomerFound = document.querySelector(".customerFound")
+let date = new Date
+let url="./contenedor.html"
+
+let  listaDeUsuario = {}
+let contador = 0
+
+inSearchCustomer.value = ""
+
+
 function stepper(btn) {
   let id = btn.getAttribute("id")
   let min = myInput.getAttribute("min")
@@ -27,28 +50,9 @@ function stepper1(btn) {
   }
 }
 
-function Customer(url,enlace) {
-    let enlace2 = "/" + enlace
-    return url + enlace2
-}
 
-const btnSaveChanges = document.querySelector("#saveChanges")
-const btnSearch = document.querySelector("#search")
-const btnCreate = document.querySelector("#create")
-// const tiquet = new Escuchando
-// inputs
 
-const inCantCreating = document.querySelector(".cant")
-const inSearchCustomer = document.querySelector("#searchCustomer")
-const NameCustomer = document.querySelector(".NameCustomer")
 
-// contenedor
-const contcustomerFound = document.querySelector(".customerFound")
-let date = new Date
-let url="./contenedor.html"
-
-let  listaDeUsuario = {}
-let contador = 0
 
  function evento(e) {
     // let customerUrl = Customer(url,NameCustomer.value)
@@ -58,7 +62,6 @@ let contador = 0
 
         let customerID = {
             "ID":NameCustomer.value,
-            "customerUrl" : url,
             "customerCantidad":inCantCreating.value,
             "fecha":date.toLocaleDateString()
         }
@@ -80,6 +83,8 @@ let contador = 0
 document.addEventListener('DOMContentLoaded',function () {
   localCarga()
 })
+let dato =/[0-9]/
+let segundaB = /^[0-9]/
 function localCarga() {
   let almacen = []
 if (localStorage.length >0){
@@ -87,56 +92,88 @@ if (localStorage.length >0){
   let htmlEnlace = document.createElement('div')
   contcustomerFound.appendChild(htmlEnlace)
   let arr = []
-  for(var i = 0; i < localStorage.length; i++) {              
+  for(let i = 0; i < localStorage.length; i++) { 
+
     let clave = localStorage.key(i);
-    let cliente = [JSON.parse(localStorage.getItem(clave))];
-    for (const iterator of cliente) {
-      let contendedorCards = document.createElement('section')
+    
+      let cliente = [JSON.parse(localStorage.getItem(clave))];
+      for (const iterator of cliente) {
+        let contendedorCards = document.createElement('section')
+        
 
-      let div = `
-      <div class="cont">
-        <h1 class="identi" id="tomar">${iterator.ID}</h1>
-        <h2 class="cantidad">Cantidad de tiqutes: ${iterator.customerCantidad}</h2>
-        <button id="PR">click</button>
-        <a href="${iterator.customerUrl}" id="">hola</a>
-        <h4 class="fecha">${iterator.fecha}</h4>
-      </div>`
-      contendedorCards.innerHTML = div
-      contcustomerFound.append(contendedorCards)
-
-      $("#PR").click(function (e) {
-        let elemento = e.target.parentElement.children
-        for (const iterator of elemento) {
-            
-            
-            
+        if (segundaB.test(iterator.ID)){
+          localStorage.removeItem(iterator.ID)
         }
-      })
-      
-    }
+        else if (segundaB.test(clave)){
+          localStorage.removeItem(clave)
+        }
+        else{        let div = `
+        <div class="cont" id="cont">
+          <h1 class="identi" id="tomar">${iterator.ID}</h1>
+          <h2 class="cantidad" id="cantidad">Cantidad de tiqutes: ${iterator.customerCantidad}</h2>
+          <button class="click" id="PR">click</button>
+          <a href="${url}" id="">hola</a>
+          <h4 class="fecha">${iterator.fecha}</h4>
+        </div>`
+        contendedorCards.innerHTML = div
+        contcustomerFound.append(contendedorCards)
+  
+        $(".cont").click(function (e) {
+          let elemento = e.target.parentElement.children
+          console.log(e.target.getAttribute('id'))
+          if (e.target.getAttribute('id')=="PR"){
+            let nombre = elemento[0].textContent
+            let cant = elemento[1].textContent.match(dato)
+            console.log(nombre,cant)
+            let ide ="1"+ nombre
+            localStorage.setItem(ide,cant)
+          }
+          
+        })
+}
 
-   
+      }
 
+  
+        
+  
+    } 
 
 }
-}}
+}
+
+let regu = /[\-0-9]/ 
+
+let r =  /[0-9]/
+btnSearch.addEventListener('click',()=>{
+  let Nombre =inSearchCustomer
+  if (Nombre.value.length > 0) {
+    let valor = JSON.parse(localStorage.getItem(Nombre.value))
+    let cantidad = Number(cantr)
 
 
-
-let data = localStorage.getItem(inSearchCustomer.value)
-console.log(data)
-
-
-      // $(contcustomerFound).html( `<div class='cont'<h1 class='identi' id='tomar'>${iterator.ID}</h1><h2 class='cantida'>Cantidad de tiqutes: ${iterator.customerCantidad}</h2><button id='PR'>click</button><h4 class='fecha'>${iterator.fecha}</h4></div>`)
-    // for(const i in cliente){
+    if (regu.test(cantidad)) {
+      cantidad = String(cantidad).replace("-","")
+      cantidad = Number(cantidad)
+      let nuevoValor =valor.customerCantidad-cantidad 
+      console.log(nuevoValor)
       
-    //   arr.push(cliente[i])
-
-    // }
-    // almacen.push(arr)
-    // htmlEnlace.innerHTML = `<h1>${clienteID}</h1>
-    // <p>${fechaDeElaboracion}, direccion: ${clientUrl}</p>
-    // <p>${cant}</p>
-    // ` 
-
     
+    }
+    else if (cantr == undefined || cantr ==null){
+      alert('no introdujiste un numero')
+    }
+    else if ( typeof(cantidad)==='number' && r.test(cantidad)){
+      alert('entramos en la suma')
+    }else{
+      console.log('en ninguno')
+    }
+  }else{
+    alert("No has introducido datos para buscar")
+  }
+  
+})
+
+
+
+
