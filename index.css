@@ -15,6 +15,7 @@ body{
     background-image: url(./img/cool-background.png);
     background-attachment: fixed;
     background-position: center;
+    background-size: cover;
     overflow-x: hidden;
 }
 

@@ -44,9 +44,9 @@ function stepper1(btn) {
     myInput2.setAttribute("value", newvalue);
   }
 }
-const btnbusqueda = document.getElementById("searchUser")
-const inpBusqueda = document.getElementById('inpBusqueda')
-
+const btnbusqueda = document.getElementById("searchUser");
+const inpBusqueda = document.getElementById("inpBusqueda");
+let numero =/^[\-]/
 document.addEventListener("DOMContentLoaded", function () {
   const indexDb = window.indexedDB;
 
@@ -72,20 +72,41 @@ document.addEventListener("DOMContentLoaded", function () {
         keyPath: "clienteID",
       });
     };
-    const upgradeData = (data) => {
+    function upgradeData(data) {
       const transaction = db.transaction(["ListCustomer"], "readwrite");
       const objectStore = transaction.objectStore("ListCustomer");
       const reques = objectStore.put(data);
-      readData();
-    };
+      cambio.value = "";
+      inSearchCustomer.value = "";
+      cantr.value = "";
 
-    const addData = (data) => {
+      readData();
+    }
+    function deleteData(key) {
+      const transaction = db.transaction(["ListCustomer"], "readwrite");
+      const objectStore = transaction.objectStore("ListCustomer");
+      const reques = objectStore.delete(key);
+
+      reques.onsuccess = (e) => {
+        readData();
+      };
+    }
+
+    function addData(data) {
       const transaction = db.transaction(["ListCustomer"], "readwrite");
       const objectStore = transaction.objectStore("ListCustomer");
       const reques = objectStore.add(data);
+
       readData();
-    };
-    var readData = () => {
+    }
+
+    function sendData(data) {
+      const transaction = db.transaction(["ListCustomer"], "readwrite");
+      const objectStore = transaction.objectStore("ListCustomer");
+      const reques = objectStore.add(data);
+
+    }
+    function readData() {
       const transaction = db.transaction(["ListCustomer"], "readonly");
       const objectStore = transaction.objectStore("ListCustomer");
       const reques = objectStore.openCursor();
@@ -93,26 +114,66 @@ document.addEventListener("DOMContentLoaded", function () {
 
       reques.onsuccess = (e) => {
         const cursor = e.target.result;
+
         if (cursor) {
+          console.log(numero.test(cursor.value.clienteID))
+          const div = document.createElement("div");
+          if (numero.test(cursor.value.clienteID)) {
+            deleteData(cursor.value.clienteID)
+          }
           const title = document.createElement("h1");
+
           title.textContent = "Cliente: " + cursor.value.clienteID;
-          fragment.appendChild(title);
+          div.appendChild(title);
 
           const cantida = document.createElement("h3");
           cantida.textContent = "cantidad De Tiquets: " + cursor.value.cantidad;
-          fragment.appendChild(cantida);
+          div.appendChild(cantida);
 
           const fech = document.createElement("h4");
           fech.textContent = "fecha: " + cursor.value.fecha;
           fech.style.borderBottom = "2px solid #000";
           fech.style.marginBottom = "1rem";
-          fragment.appendChild(fech);
+          div.appendChild(fech);
 
           const buttonDelete = document.createElement("button");
           buttonDelete.id = "btnEliminar";
           buttonDelete.textContent = "Delete";
-          fragment.appendChild(buttonDelete);
+          div.appendChild(buttonDelete);
 
+          buttonDelete.addEventListener("click", (e) => {
+            let dato = String(
+              e.target.parentElement.children[0].textContent
+            ).replace("Cliente: ", "");
+            contcustomerFound.removeChild(e.target.parentElement);
+            deleteData(dato);
+          });
+          const buttonCargar = document.createElement("button");
+          buttonCargar.id = "btnCargar";
+          buttonCargar.textContent = "CargarData";
+
+          buttonCargar.addEventListener("click", (e) => {
+            let name = String(
+              e.target.parentElement.children[0].textContent
+            ).replace("Cliente: ", "");
+            let cant = String(
+              e.target.parentElement.children[1].textContent
+            ).replace("cantidad De Tiquets: ", "");
+
+            let dato = {
+              clienteID: "-"+name,
+              cantidad: cant,
+              fecha: date.toLocaleDateString(),
+            };
+            let a = document.createElement('a')
+            a.href= url
+            a.textContent= 'ir Y enviar'
+            div.appendChild(a)
+            sendData(dato)
+          });
+
+          div.appendChild(buttonCargar);
+          fragment.appendChild(div);
           cursor.continue();
         } else {
           console.log("no more data");
@@ -120,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
           contcustomerFound.appendChild(fragment);
         }
       };
-    };
+    }
     btnCreate.addEventListener("click", function () {
       console.log("aqui");
       const data = {
@@ -132,30 +193,59 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(NameCustomer.value, inCantCreating.value);
       addData(data);
     });
+
     let regu = /^[\-]/;
-    function getData(key) { 
+    let cambio = document.getElementById("cambio");
+
+    function getData(key) {
       const transaction = db.transaction(["ListCustomer"], "readwrite");
       const objectStore = transaction.objectStore("ListCustomer");
       const reques = objectStore.get(key);
 
-      reques.onsuccess = (e)=>{
-        inSearchCustomer.value = reques.result.clienteID
-        cantr.value = reques.result.cantidad
-        console.log(typeof(reques.result.cantidad))
-      }
-     } 
+      reques.onsuccess = (e) => {
+        inSearchCustomer.value = reques.result.clienteID;
+        cantr.value = reques.result.cantidad;
+        inpBusqueda.value = "";
+      };
+      reques.onerror = (e) => {
+        alert(e);
+      };
+    }
 
-    btnbusqueda.addEventListener('click',()=>{
-      getData(inpBusqueda.value)
-     })
-    let r = /[0-9]/;
-    btnSearch.addEventListener("click", () => {
-      let Nombre = inSearchCustomer;
-      if (Nombre.value.length > 0) {
-        let cantidad = Number(cantr);
-        
+    btnbusqueda.addEventListener("click", () => {
+      console.log(inpBusqueda.value.length);
+      if (inpBusqueda.value.length > 0) {
+        getData(inpBusqueda.value);
       } else {
-        alert("No has introducido datos para buscar");
+        alert("introduce nombre");
+      }
+    });
+
+    let r = /[0-9]/;
+
+    btnSearch.addEventListener("click", () => {
+      let Nombre = inSearchCustomer.value;
+      let cant = Number(cantr.value);
+      if (regu.test(cambio.value)) {
+        var camb = String(cambio.value).replace("-", "");
+        var total = cant - Number(camb);
+        cantr.value = total;
+        const data = {
+          clienteID: Nombre,
+          cantidad: total,
+          fecha: date.toLocaleDateString(),
+        };
+
+        upgradeData(data);
+      } else {
+        total = Number(cambio.value) + cant;
+        cantr.value = total;
+        const data = {
+          clienteID: Nombre,
+          cantidad: total,
+          fecha: date.toLocaleDateString(),
+        };
+        upgradeData(data);
       }
     });
   }
