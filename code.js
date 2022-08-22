@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded',function () {
     const inp = document.getElementById('inp')
     const cantida = document.getElementById('numero')
+    const fechaini = document.getElementById('fecha')
     let re = /^[\-]/
     let almacen = []
 
@@ -62,10 +63,10 @@ document.addEventListener('DOMContentLoaded',function () {
             transaction.oncomplete =function (){
                 almacen.forEach(el =>{
                     if(re.test(el.clienteID)){
-                        console.log(el.cantidad,el.clienteID,el.fecha)
 
                         inp.textContent = el.clienteID.replace("-","")
                         cantida.textContent += el.cantidad
+                        fechaini.textContent += el.fecha
                     }
                     
                 })

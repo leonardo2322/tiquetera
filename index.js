@@ -67,7 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
     request.onupgradeneeded = (event) => {
       // si necesita actualizar
       db = request.result;
-      console.log("actualizado se creo correcto", db);
       const objectStore = db.createObjectStore("ListCustomer", {
         keyPath: "clienteID",
       });
@@ -116,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const cursor = e.target.result;
 
         if (cursor) {
-          console.log(numero.test(cursor.value.clienteID))
           const div = document.createElement("div");
           if (numero.test(cursor.value.clienteID)) {
             deleteData(cursor.value.clienteID)
@@ -176,14 +174,12 @@ document.addEventListener("DOMContentLoaded", function () {
           fragment.appendChild(div);
           cursor.continue();
         } else {
-          console.log("no more data");
           contcustomerFound.textContent = "";
           contcustomerFound.appendChild(fragment);
         }
       };
     }
     btnCreate.addEventListener("click", function () {
-      console.log("aqui");
       const data = {
         clienteID: NameCustomer.value,
         cantidad: inCantCreating.value,
@@ -213,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     btnbusqueda.addEventListener("click", () => {
-      console.log(inpBusqueda.value.length);
       if (inpBusqueda.value.length > 0) {
         getData(inpBusqueda.value);
       } else {
@@ -226,27 +221,32 @@ document.addEventListener("DOMContentLoaded", function () {
     btnSearch.addEventListener("click", () => {
       let Nombre = inSearchCustomer.value;
       let cant = Number(cantr.value);
-      if (regu.test(cambio.value)) {
-        var camb = String(cambio.value).replace("-", "");
-        var total = cant - Number(camb);
-        cantr.value = total;
-        const data = {
-          clienteID: Nombre,
-          cantidad: total,
-          fecha: date.toLocaleDateString(),
-        };
-
-        upgradeData(data);
-      } else {
-        total = Number(cambio.value) + cant;
-        cantr.value = total;
-        const data = {
-          clienteID: Nombre,
-          cantidad: total,
-          fecha: date.toLocaleDateString(),
-        };
-        upgradeData(data);
+      if (inSearchCustomer.value.length >0) {
+        if (regu.test(cambio.value)) {
+          var camb = String(cambio.value).replace("-", "");
+          var total = cant - Number(camb);
+          cantr.value = total;
+          const data = {
+            clienteID: Nombre,
+            cantidad: total,
+            fecha: date.toLocaleDateString(),
+          };
+  
+          upgradeData(data);
+        } else {
+          total = Number(cambio.value) + cant;
+          cantr.value = total;
+          const data = {
+            clienteID: Nombre,
+            cantidad: total,
+            fecha: date.toLocaleDateString(),
+          };
+          upgradeData(data);
+        }
+      }else{
+        alert('debes agregar el usuario')
       }
+      
     });
   }
 });
