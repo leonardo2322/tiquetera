@@ -31,19 +31,7 @@ function stepper(btn) {
   }
 }
 
-const myInput2 = document.querySelector("#quantityb");
-function stepper1(btn) {
-  let id = btn.getAttribute("id");
-  let min = myInput2.getAttribute("min");
-  let max = myInput2.getAttribute("max");
-  let value = myInput2.getAttribute("value");
-  let step = myInput2.getAttribute("step");
-  let calstep = id == "increment" ? step * 1 : step * -1;
-  let newvalue = parseInt(value) + calstep;
-  if (newvalue >= min && newvalue <= max) {
-    myInput2.setAttribute("value", newvalue);
-  }
-}
+
 const btnbusqueda = document.getElementById("searchUser");
 const inpBusqueda = document.getElementById("inpBusqueda");
 let numero =/^[\-]/
@@ -55,7 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const request = indexDb.open("clientes", 1);
 
     request.onsuccess = (evento) => {
-      // todo ha hido bien
+      // todo ha hido bien cargando procesos de despues de la creacion de la base de datos
+      
       db = request.result;
       console.log("satisfactoriament", db);
       readData();
@@ -167,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
             a.href= url
             a.textContent= 'ir Y enviar'
             div.appendChild(a)
-            sendData(dato)
+            sendData(dato)//asssss
           });
 
           div.appendChild(buttonCargar);
@@ -180,14 +169,21 @@ document.addEventListener("DOMContentLoaded", function () {
       };
     }
     btnCreate.addEventListener("click", function () {
-      const data = {
-        clienteID: NameCustomer.value,
-        cantidad: inCantCreating.value,
-        fecha: date.toLocaleDateString(),
-      };
+      if (NameCustomer.value.length > 0) {
+        const data = {
+          clienteID: NameCustomer.value,
+          cantidad: inCantCreating.value,
+          fecha: date.toLocaleDateString(),
+        };
+  
+        console.log(NameCustomer.value, inCantCreating.value);
+        addData(data);
+        NameCustomer.value = ''
+        inCantCreating.value = 1
+      }else{
+        alert('no has introducido datos')
+      }
 
-      console.log(NameCustomer.value, inCantCreating.value);
-      addData(data);
     });
 
     let regu = /^[\-]/;

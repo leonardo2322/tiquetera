@@ -61,15 +61,32 @@ document.addEventListener('DOMContentLoaded',function () {
                 
             }
             transaction.oncomplete =function (){
+              let cliente
                 almacen.forEach(el =>{
                     if(re.test(el.clienteID)){
 
                         inp.textContent = el.clienteID.replace("-","")
                         cantida.textContent += el.cantidad
                         fechaini.textContent += el.fecha
+                        var data = {
+                          "name":el.clienteID.replace("-",""),
+                          "cant":el.cantidad,
+                          "fechaa":el.fecha
+                        }
+                        cliente = el.clienteID
+                        localStorage.setItem(el.clienteID,JSON.stringify(data))
                     }
                     
+                    
                 })
+                if (localStorage.length > 0) {
+                  let local = JSON.parse(localStorage.getItem(cliente))
+                  inp.textContent = local.name
+                  cantida.textContent ="TU Cantidad de tiquetes Es: "+ local.cant
+                  fechaini.textContent =local.fechaa
+                  console.log(local)
+                }
+                
             }
             
         }
